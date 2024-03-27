@@ -1,0 +1,21 @@
+class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if (k <= 1) return 0; // If k <= 1, product will always be >= k
+        
+        int count = 0;
+        int product = 1;
+        int left = 0;
+
+        for (int right = 0; right < nums.length; ++right) {
+            product *= nums[right];
+            while (product >= k) {
+                product /= nums[left++];
+            }
+            // At each step, update the count by adding the number of subarrays
+            // ending at the current right pointer
+            count += right - left + 1;
+        }
+
+        return count;
+    }
+}
